@@ -21,8 +21,8 @@ return new class extends Migration
             // Constrained impide que pueran borrar el usuario que tenga articulos
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Category::class)->constrained();
-            $table->string("title", 80)->unique();
-            $table->text("content");
+            $table->string('title', 80)->unique();
+            $table->text('content');
             $table->timestamps();
         });
     }

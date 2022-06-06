@@ -16,10 +16,10 @@ class CategorySeeder extends Seeder
     public function run()
     {
         Category::insert([
-            ["name" => "Laravel"],
-            ["name" => "Php"],
-            ["name" => "Vue"],
-            ["name" => "Node"],
+            ['name' => 'Laravel'],
+            ['name' => 'Php'],
+            ['name' => 'Vue'],
+            ['name' => 'Node'],
         ]);
     }
 }
