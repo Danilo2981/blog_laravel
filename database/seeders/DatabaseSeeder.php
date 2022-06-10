@@ -21,11 +21,13 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Danilo',
             'email' => 'danilo@example.com',
+            'password' => bcrypt('12345678'),
         ]);
 
         User::factory()->create([
             'name' => 'Soporte',
             'email' => 'soporte@example.com',
+            'password' => bcrypt('12345678'),
         ]);
 
         $this->call(CategorySeeder::class);
