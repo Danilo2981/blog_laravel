@@ -3,28 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    // Cambiar @return \Illuminate\Http\Response por 
+    // @return Renderable
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Renderable
      */
-    public function index()
+    public function index(): Renderable
     {
-        //
+        $articles = Article::with(relations: 'category')->latest()->paginate();
+        return view('articles.index', compact('articles'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Renderable
      */
-    public function create()
+    public function create(): Renderable
     {
-        //
+        $article = new Article;
+        $title = __('Crear artículo');
+        $action = route('articles.store');
+        return view('articles.form', compact('article','title','action'));
     }
 
     /**
