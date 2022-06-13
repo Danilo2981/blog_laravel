@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use App\Http\Requests\ArticleRecuest;
+use App\Http\Requests\ArticleRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\Support\Renderable;
 
 class ArticleController extends Controller
 {
@@ -38,12 +41,16 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  ArticleRequest  $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ArticleRequest $request): RedirectResponse
     {
-        //
+        $validated = $request->safe()->only(['title','content', 'category_id']);
+        Article::create($validated);
+
+        session()->flash('success', __('El articulo ha sido creado correctamente'));
+        return redirect(route('articles.index'));
     }
 
     /**
