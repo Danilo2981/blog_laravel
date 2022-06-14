@@ -26,12 +26,28 @@
                                     <div class="md:flex-grow">
                                         <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">{{ $article->title }}</h2>
                                         <p class="leading-relaxed">{{ $article->excerpt }}</p>
-                                        <a class="text-indigo-500 inline-flex items-center mt-4">Learn More
+                                        <a href="{{ route("articles.show", ["article" => $article]) }}" class="text-indigo-500 inline-flex items-center mt-4">{{ __("Ver detalle") }}
                                             <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M5 12h14"></path>
-                                            <path d="M12 5l7 7-7 7"></path>
+                                                <path d="M5 12h14"></path>
+                                                <path d="M12 5l7 7-7 7"></path>
                                             </svg>
-                                        </a>
+                                        </a> |
+                                        <a href="{{ route("articles.edit", ["article" => $article]) }}" class="text-indigo-500 inline-flex items-center mt-4">{{ __("Editar") }}
+                                            <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M5 12h14"></path>
+                                                <path d="M12 5l7 7-7 7"></path>
+                                            </svg>
+                                        </a> |
+                                        <form class="inline" method="POST" action="{{ route("articles.destroy", ["article" => $article]) }}">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button type="submit" class="text-red-500 inline-flex items-center mt-4">{{ __("Eliminar") }}
+                                                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M5 12h14"></path>
+                                                    <path d="M12 5l7 7-7 7"></path>
+                                                </svg>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>    
                                 @endforeach                                

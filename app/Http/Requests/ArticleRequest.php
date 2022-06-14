@@ -30,7 +30,7 @@ class ArticleRequest extends FormRequest
                 'category_id' => 'required|exists:categories,id',
             ],
             'PUT' => [
-                'title' => 'required|min:2|max:40|unique:articles,title' . $this->route('article')->id(),
+                'title' => 'required|min:2|max:40|unique:articles,title,' . $this->route('article')->id,
                 'content' => 'required|min:10|max:1000',
                 'category_id' => 'required|exists:categories,id',
             ],

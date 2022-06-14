@@ -8,6 +8,7 @@ use App\Http\Requests\ArticleRecuest;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Facades\Redirect;
 
 class ArticleController extends Controller
 {
@@ -57,44 +58,54 @@ class ArticleController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Article  $article
-     * @return \Illuminate\Http\Response
+     * @return Renderable
      */
-    public function show(Article $article)
+    public function show(Article $article): Renderable
     {
-        //
+        // Carga las relaciones con load 
+        $article->load('user:id,name', 'category:id,name');
+        return view('articles.show', compact('article'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Article  $article
-     * @return \Illuminate\Http\Response
+     * @return Renderable
      */
-    public function edit(Article $article)
+    public function edit(Article $article): Renderable
     {
-        //
+        $title = __('Actualizar artículo');
+        $action = route('articles.update', ['article' => $article]);
+        return view('articles.form', compact('article', 'title', 'action'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  ArticleRequest  $request
      * @param  \App\Models\Article  $article
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, Article $article)
+    public function update(ArticleRequest $request, Article $article): RedirectResponse
     {
-        //
+        $validated = $request->safe()->only(['title','content', 'category_id']);
+        $article->update($validated);
+
+        session()->flash('success', __('El articulo ha sido actualizado correctamente'));
+        return redirect(route('articles.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Article  $article
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy(Article $article)
+    public function destroy(Article $article): RedirectResponse
     {
-        //
+        $article->delete();
+        session()->flash('success', __('El articulo ha sido elimando correctamente'));
+        return redirect(route('articles.index'));
     }
 }
