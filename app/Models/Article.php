@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Article extends Model
 {
@@ -41,5 +42,10 @@ class Article extends Model
     // Mostrar dia hora y minuto sin segundo
     public function getCreatedAtFormattedAttribute(): string {
         return Carbon::parse($this->created_at)->format("d-m-Y H:i");
+    }
+
+    // Crea un resumen del contenido
+    public function getExcerptAttribute(): string {
+        return Str::excerpt($this->content);
     }
 }

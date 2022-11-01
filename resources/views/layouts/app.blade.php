@@ -29,6 +29,13 @@
 
             <!-- Page Content -->
             <main>
+                @if (session()->has('success'))
+                    <div class="bg-green-500 text-white p-4">
+                        <ul>
+                            <li>{{ session('success') }}</li>
+                        </ul>
+                    </div>
+                @endif
                 {{ $slot }}
             </main>
         </div>
